@@ -27,59 +27,162 @@ class _LoginPageState extends State<LoginPage> {
   String _username = '';
   String _password = '';
 
+  // Mock function to simulate login
+  void _login() {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+
+      // Example of simple username and password check
+      if (_username == 'admin' && _password == 'password') {
+        // Navigate to HomePage on successful login
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+      } else {
+        // Show error message if login fails
+        showDialog(
+          context: context,
+          builder: (context) => AlertDialog(
+            title: Text('Login Failed'),
+            content: Text('Incorrect username or password'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(context),
+                child: Text('OK'),
+              ),
+            ],
+          ),
+        );
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Form(
-          key: _formKey,
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Username'),
-                onChanged: (value) {
-                  setState(() {
-                    _username = value;
-                  });
-                },
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter your username';
-                  }
-                  return null;
-                },
-              ),
-              TextFormField(
-                decoration: InputDecoration(labelText: 'Password'),
-                obscureText: true,
-                onChanged: (value) {
-                  setState(() {
-                    _password = value;
-                  });
-                },
-                validator: (value) {
-                  if (value!.isEmpty) {
-                    return 'Please enter your password';
-                  }
-                  return null;
-                },
+              SizedBox(height: 80),
+              Image.asset(
+                "assets/kiotLOGO.png", // Replace with your logo asset
+                height: 100,
               ),
               SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );
-                  }
-                },
-                child: Text('Login'),
+              Text(
+                'Student ERP',
+                style: TextStyle(
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 10),
+              Text(
+                'Manage Your Education Seamlessly',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey,
+                ),
+              ),
+              SizedBox(height: 40),
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: <Widget>[
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Username',
+                        prefixIcon: Icon(Icons.person),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _username = value;
+                        });
+                      },
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your username';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 20),
+                    TextFormField(
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        prefixIcon: Icon(Icons.lock),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                      ),
+                      obscureText: true,
+                      onChanged: (value) {
+                        setState(() {
+                          _password = value;
+                        });
+                      },
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter your password';
+                        }
+                        return null;
+                      },
+                    ),
+                    SizedBox(height: 20),
+                    Align(
+                      alignment: Alignment.centerRight,
+                      child: TextButton(
+                        onPressed: () {
+                          // Forgot password functionality
+                        },
+                        child: Text(
+                          'Forgot Password?',
+                          style: TextStyle(
+                            color: Colors.blue,
+                          ),
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: 20),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        ElevatedButton(
+                          onPressed: () {
+                            // Sign up functionality
+                          },
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 15),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: Text('Sign Up'),
+                        ),
+                        ElevatedButton(
+                          onPressed: _login, // Call the login function
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue,
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 30, vertical: 15),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                          ),
+                          child: Text('Login'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ],
           ),
@@ -96,66 +199,8 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text('Student ERP Home'),
       ),
-      body: ListView(
-        padding: const EdgeInsets.all(16.0),
-        children: [
-          ListTile(
-            leading: Icon(Icons.person),
-            title: Text('Student View'),
-            onTap: () {
-              // Navigate to Student View
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.how_to_reg),
-            title: Text('HOD View'),
-            onTap: () {
-              // Navigate to HOD View
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.school),
-            title: Text('Faculty View'),
-            onTap: () {
-              // Navigate to Faculty View
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.assignment),
-            title: Text('Attendance Management'),
-            onTap: () {
-              // Navigate to Attendance Management
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.attach_money),
-            title: Text('Fee Management'),
-            onTap: () {
-              // Navigate to Fee Management
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.note),
-            title: Text('Upload Notes & Circulars'),
-            onTap: () {
-              // Navigate to Notes & Circulars Upload
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.chat),
-            title: Text('Personal Chat with Mentor'),
-            onTap: () {
-              // Navigate to Personal Chat
-            },
-          ),
-          ListTile(
-            leading: Icon(Icons.alarm),
-            title: Text('Leave Intimation'),
-            onTap: () {
-              // Navigate to Leave Intimation
-            },
-          ),
-        ],
+      body: Center(
+        child: Text('Welcome to the Student ERP System'),
       ),
     );
   }
