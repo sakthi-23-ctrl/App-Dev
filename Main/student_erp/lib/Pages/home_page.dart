@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'attendance_page.dart';
 class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
@@ -8,27 +8,37 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0; // Track the selected index
 
-  void _onItemTapped(int index) {
-    setState(() {
-      _selectedIndex = index; // Update the selected index
-    });
+ void _onItemTapped(int index) {
+  setState(() {
+    _selectedIndex = index; // Update the selected index
+  });
 
-    // Navigate to the selected page
-    switch (index) {
-      case 0:
-        // Navigate to Home Page (current)
-        break;
-      case 1:
-        // Navigate to Attendance Page
-        break;
-      case 2:
-        // Navigate to Fees Page
-        break;
-      case 3:
-        // Navigate to Notes Page
-        break;
-    }
+  // Navigate to the selected page
+  switch (index) {
+    case 0:
+      // Navigate to Home Page (current)
+      break;
+    case 1:
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => AttendancePage(),
+        ),
+      ).then((_) {
+        setState(() {
+          _selectedIndex = 1; // Update the index to Attendance on return
+        });
+      });
+      break;
+    case 2:
+      // Navigate to Fees Page
+      break;
+    case 3:
+      // Navigate to Notes Page
+      break;
   }
+}
+
 
   @override
   Widget build(BuildContext context) {
