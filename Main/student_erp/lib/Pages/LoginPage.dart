@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'home_page.dart'; // Import the home page
+import 'HomePage.dart'; // Import the home page
 
 class LoginPage extends StatefulWidget {
   @override
