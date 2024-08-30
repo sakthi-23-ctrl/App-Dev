@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'Pages/LoginPage.dart';
+import 'StudentPages/LoginPage.dart';
 
 void main() {
   runApp(StudentERPApp());
