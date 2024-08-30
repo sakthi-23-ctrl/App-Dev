@@ -1,9 +1,46 @@
 import 'package:flutter/material.dart';
-import 'homepage.dart';
-import 'feespage.dart';
-import 'notespage.dart';
+import 'HomePage.dart';
+import 'FeesPage.dart';
+import 'NotesPage.dart';
 
-class AttendancePage extends StatelessWidget {
+class AttendancePage extends StatefulWidget {
+  @override
+  _AttendancePageState createState() => _AttendancePageState();
+}
+
+class _AttendancePageState extends State<AttendancePage> {
+  int _selectedIndex = 1;
+
+  void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+
+    switch (index) {
+      case 0:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+        break;
+      case 1:
+        // Already on AttendancePage, no need to navigate
+        break;
+      case 2:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => FeesPage()),
+        );
+        break;
+      case 3:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => NotesPage()),
+        );
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,7 +84,7 @@ class AttendancePage extends StatelessWidget {
               title: Text('Home'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => HomePage()),
                 );
@@ -58,6 +95,7 @@ class AttendancePage extends StatelessWidget {
               title: Text('Attendance'),
               onTap: () {
                 Navigator.pop(context);
+                // Already on AttendancePage, no need to navigate
               },
             ),
             ListTile(
@@ -65,7 +103,7 @@ class AttendancePage extends StatelessWidget {
               title: Text('Fees'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => FeesPage()),
                 );
@@ -76,7 +114,7 @@ class AttendancePage extends StatelessWidget {
               title: Text('Notes'),
               onTap: () {
                 Navigator.pop(context);
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
                   MaterialPageRoute(builder: (context) => NotesPage()),
                 );
@@ -119,12 +157,37 @@ class AttendancePage extends StatelessWidget {
                       subtitle: Text('Attendance: 88%'),
                     ),
                   ),
-                  // Add more cards or widgets as needed
                 ],
               ),
             ),
           ],
         ),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.blue, // Set the background color here
+        selectedItemColor:
+            Color.fromARGB(255, 0, 0, 0), // Set the color for the selected item
+        unselectedItemColor: Colors.grey, // Set the color for unselected items
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.check_circle),
+            label: 'Attendance',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.attach_money),
+            label: 'Fees',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notes),
+            label: 'Notes',
+          ),
+        ],
       ),
     );
   }

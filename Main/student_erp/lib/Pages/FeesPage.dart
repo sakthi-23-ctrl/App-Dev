@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'homePage.dart';
-import 'attendancePage.dart';
+import 'HomePage.dart';
+import 'AttendancePage.dart';
 import 'NotesPage.dart';
 
 class FeesPage extends StatelessWidget {
@@ -83,6 +83,10 @@ class FeesPage extends StatelessWidget {
         child: Text('Fees Page'),
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.blue, // Set the background color here
+        selectedItemColor:
+            Color.fromARGB(255, 0, 0, 0), // Set the color for the selected item
+        unselectedItemColor: Colors.grey, // Set the color for unselected items
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),

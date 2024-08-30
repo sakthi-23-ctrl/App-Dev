@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'AttendancePage.dart';
+import 'FeesPage.dart';
+import 'NotesPage.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -6,25 +9,43 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  int _currentIndex = 0;
-  final List<Widget> _pages = [
-    HomePageContent(), // Content of the HomePage
-    AttendancePage(), // Placeholder for the Attendance page
-    FeesPage(), // Placeholder for the Fees page
-    NotesPage(), // Placeholder for the Notes page
-  ];
+  int _selectedIndex = 0;
 
-  void _onBottomNavTapped(int index) {
+  void _onItemTapped(int index) {
     setState(() {
-      _currentIndex = index;
+      _selectedIndex = index;
     });
+
+    switch (index) {
+      case 0:
+        // Already on HomePage, no need to navigate
+        break;
+      case 1:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => AttendancePage()),
+        );
+        break;
+      case 2:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => FeesPage()),
+        );
+        break;
+      case 3:
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => NotesPage()),
+        );
+        break;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Student ERP Home'),
+        title: Text('Home'),
         leading: Builder(
           builder: (BuildContext context) => IconButton(
             icon: Icon(Icons.menu),
@@ -53,7 +74,7 @@ class _HomePageState extends State<HomePage> {
               child: Text(
                 'Menu',
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Color.fromARGB(255, 251, 249, 249),
                   fontSize: 24,
                 ),
               ),
@@ -63,9 +84,10 @@ class _HomePageState extends State<HomePage> {
               title: Text('Home'),
               onTap: () {
                 Navigator.pop(context);
-                setState(() {
-                  _currentIndex = 0;
-                });
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomePage()),
+                );
               },
             ),
             ListTile(
@@ -73,9 +95,10 @@ class _HomePageState extends State<HomePage> {
               title: Text('Attendance'),
               onTap: () {
                 Navigator.pop(context);
-                setState(() {
-                  _currentIndex = 1;
-                });
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => AttendancePage()),
+                );
               },
             ),
             ListTile(
@@ -83,9 +106,10 @@ class _HomePageState extends State<HomePage> {
               title: Text('Fees'),
               onTap: () {
                 Navigator.pop(context);
-                setState(() {
-                  _currentIndex = 2;
-                });
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => FeesPage()),
+                );
               },
             ),
             ListTile(
@@ -93,19 +117,74 @@ class _HomePageState extends State<HomePage> {
               title: Text('Notes'),
               onTap: () {
                 Navigator.pop(context);
-                setState(() {
-                  _currentIndex = 3;
-                });
+                Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(builder: (context) => NotesPage()),
+                );
               },
             ),
           ],
         ),
       ),
-      body: _pages[_currentIndex],
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Row(
+              children: <Widget>[
+                CircleAvatar(
+                  radius: 50,
+                  backgroundImage: AssetImage("assets/sakthivel.jpg"),
+                ),
+                SizedBox(width: 20),
+                Text(
+                  'Student Name',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            SizedBox(height: 20),
+            Text(
+              'Circulars & Events',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            Expanded(
+              child: ListView(
+                children: <Widget>[
+                  Card(
+                    child: ListTile(
+                      title: Text('Event 1'),
+                      subtitle: Text('Details about event 1'),
+                    ),
+                  ),
+                  Card(
+                    child: ListTile(
+                      title: Text('Event 2'),
+                      subtitle: Text('Details about event 2'),
+                    ),
+                  ),
+                  Card(
+                    child: ListTile(
+                      title: Text('Event 3'),
+                      subtitle: Text('Details about event 3'),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _currentIndex,
-        onTap: _onBottomNavTapped,
-        items: [
+        backgroundColor: Colors.blue, // Set the background color here
+        selectedItemColor:
+            Color.fromARGB(255, 0, 0, 0), // Set the color for the selected item
+        unselectedItemColor: Colors.grey, // Set the color for unselected items
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+        items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',
@@ -124,94 +203,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
       ),
-    );
-  }
-}
-
-class HomePageContent extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            children: <Widget>[
-              CircleAvatar(
-                radius: 50,
-                backgroundImage: AssetImage('assets/student_photo.png'),
-              ),
-              SizedBox(width: 20),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    'Student Name',
-                    style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  ),
-                  Text(
-                    'Student ID: 12345',
-                    style: TextStyle(fontSize: 16, color: Colors.grey),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          SizedBox(height: 30),
-          Text(
-            'Circulars & Events',
-            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          ),
-          SizedBox(height: 10),
-          Expanded(
-            child: ListView(
-              children: <Widget>[
-                Card(
-                  child: ListTile(
-                    title: Text('Event 1'),
-                    subtitle: Text('Details about event 1'),
-                  ),
-                ),
-                Card(
-                  child: ListTile(
-                    title: Text('Circular 1'),
-                    subtitle: Text('Details about circular 1'),
-                  ),
-                ),
-                // Add more cards for additional events and circulars
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class AttendancePage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Attendance Page'),
-    );
-  }
-}
-
-class FeesPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Fees Page'),
-    );
-  }
-}
-
-class NotesPage extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Center(
-      child: Text('Notes Page'),
     );
   }
 }
