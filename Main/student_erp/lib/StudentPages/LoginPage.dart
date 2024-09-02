@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import '../HodPages/HodHomePage.dart';
+import '../FacultyPages/FacultyHomePage.dart';
 import 'HomePage.dart'; // Import the home page
 
 class LoginPage extends StatefulWidget {
@@ -19,6 +21,18 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(builder: (context) => HomePage()),
+        );
+      } else if (_username == 'hod' && _password == 'password') {
+        // Navigate to Faculty Home Page
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HodHomePage()),
+        );
+      } else if (_username == 'faculty' && _password == 'password') {
+        // Navigate to Faculty Home Page
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => FacultyHomePage()),
         );
       } else {
         showDialog(
